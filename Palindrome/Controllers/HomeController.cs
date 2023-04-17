@@ -18,10 +18,13 @@ namespace Palindrome.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Reverse()
         {
-            return View();
+            PalindromeModel palindrome = new PalindromeModel();
+            return View(palindrome);
         }
+     
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
