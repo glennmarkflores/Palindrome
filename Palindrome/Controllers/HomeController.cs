@@ -14,13 +14,8 @@ namespace Palindrome.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
-        public IActionResult Reverse()
+        public IActionResult Index()
         {
             PalindromeModel palindrome = new PalindromeModel();
             return View(palindrome);
@@ -28,7 +23,7 @@ namespace Palindrome.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Reverse(PalindromeModel palindrome)
+        public IActionResult Index(PalindromeModel palindrome)
         {
             string inputWord = palindrome.InputWord;
             StringBuilder reversedBuilder = new StringBuilder(inputWord.Length);
