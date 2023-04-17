@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Palindrome.Models;
 using System.Diagnostics;
+using System.Text;
 
 namespace Palindrome.Controllers
 {
@@ -24,7 +25,32 @@ namespace Palindrome.Controllers
             PalindromeModel palindrome = new PalindromeModel();
             return View(palindrome);
         }
-     
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Reverse(PalindromeModel palindrome)
+        {
+            string inputWord = palindrome.InputWord;
+            StringBuilder reversedBuilder = new StringBuilder(inputWord.Length);
+
+            for (int i = inputWord.Length - 1; i >= 0; i--)
+            {
+                reversedBuilder.Append(inputWord[i]);
+
+                if (i < inputWord.Length / 2 && inputWord[i] != inputWord[inputWord.Length - i - 1])
+                {
+                    palindrome.IsPalindrome = false;
+                    palindrome.Message = $"{inputWord} is not a Palindrome";
+                } else
+                {
+                    palindrome.Message = $"{inputWord} is a Palindrome";
+                }
+            }
+
+            palindrome.ReverseWord = reversedBuilder.ToString();
+
+            return View(palindrome);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
